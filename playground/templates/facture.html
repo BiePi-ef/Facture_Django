@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Example</title>
+</head>
+<body>
+      {% if facture %}
+      <ul style="list-style: none; padding: 0;">
+        {% for product in products %}
+          <h3 style="margin: 0 0 0.5rem 0;">ID : {{ facture.id }}</h3>
+          <p> Date : {{ facture.date }}</p>
+        {% endfor %}
+      </ul>
+
+      {% else %}
+        <p>No facture with this id.</p>
+      {% endif %}
+
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #343a40;
+      color: #fff;
+      padding: 2rem 0;
+      text-align: center;
+      position: relative;
+    }
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      padding: 2rem;
+    }
+    h1 {
+      margin-top: 0;
+    }
+    .cta-btn {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.75rem 2rem;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover {
+      background: #0056b3;
+    }
+    .cart-btn {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      background: #28a745;
+      color: #fff;
+      padding: 0.5rem 1.2rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: background 0.2s;
+      z-index: 10;
+    }
+    .cart-btn:hover {
+      background: #218838;
+    }
+    .accueil-btn {
+    position: absolute;
+    left: 2rem;
+    top: 2rem;
+    color: #fff;
+    background: transparent;
+    border: none;
+    font-size: 1.1rem;
+    text-decoration: none;
+    font-weight: bold;
+    z-index: 11;
+    transition: color 0.2s;
+    }
+    .accueil-btn:hover {
+        color: #ffc107;
+        text-decoration: underline;
+    }
+    footer {
+      text-align: center;
+      color: #888;
+      margin: 2rem 0 0 0;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+    <header>
+        <a href="{% url 'accueil' %}" class="accueil-btn">Accueil</a>
+        <h1>Welcome to Facture</h1>
+        <p>Your one-stop shop for all your needs</p>
+        <a href="{% url 'cart_detail' %}" class="cart-btn">🛒 Cart</a>
+        <a href="{% url 'factures' %}" class="factures-btn" style="position:absolute; top:2rem; right:8rem; background:#ffc107; color:#343a40; padding:0.5rem 1.2rem; border-radius:4px; text-decoration:none; font-size:1.1rem; font-weight:bold; z-index:10; transition:background 0.2s;">
+            Factures
+        </a>
+    </header>
+    <h2>Your Cart</h2>
+    <ul>
+      {% for item in cart %}
+        <li>
+          {{ item.product.name }} - {{ item.quantity }} * ${{ item.product.price }} = ${{ item.total_price }}
+          <a href="{% url 'cart_remove' item.product.id %}">Remove</a>
+          {% if item.quantity > 1 %}
+          <a href="{% url 'cart_remove_one' item.product.id %}">Remove One</a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+
+    <p>Total: ${{ cart.get_total_price }}</p>
+    <a href="{% url 'products' %}">Return to shopping</a> </br> </br>
+
+    {% if str_products_ids == None %}
+      <form method="post" action="{% url 'factures' %}">
+        {% csrf_token %}
+        <button type="submit">
+          Checkout and see bill
+        </button>
+      </form>
+    {% else %}
+          <form method="post" action="{% url 'checkout' str_products_ids %}">
+        {% csrf_token %}
+        <button type="submit">
+          Checkout and see bill
+        </button>
+      </form>
+    {% endif %}
+  </body>
+</html>

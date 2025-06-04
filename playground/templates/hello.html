@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Example</title>
+</head>
+<body>
+  {% if name %}
+    <h1>
+      Hello {{ name }} !
+    </h1>
+  {% else %}
+    <h1>
+      Hello World !
+    </h1>
+  {% endif %}
+  
+  <!-- <ul>
+    {% for product in products %}
+    <li>{{ product.name }} : {{ product.price }} : {{ product.expiration_date }} </li>
+    {% endfor %}
+  </ul> -->
+
+  <!-- <ul>
+    {% for facture in factures %}
+    <li>{{ facture.id }} : {{ facture.date }} 
+    </li>
+    {% endfor %}
+  </ul> -->
+
+  <!-- <ul>
+    {% for facture in facture_product_F %}
+    <li>{{ facture }}
+      <li>
+        {{ facture.id }}
+      </li>
+    </li>
+    {% endfor %}
+  </ul> -->
+
+  {% for facture in test %}
+  <ul>
+    {{ facture.id }} : {{ facture.date }}
+    {% for product in facture.products.all %}
+    <li>
+      {{ product.name }} ({{ product.id }}) </br>
+      - {{ product.price }} €
+    </li>
+    {% endfor %}
+    TOTAL PRICE => {{ facture.price_total }} €
+  </ul>
+  {% endfor %}
+</body>
+</html>
