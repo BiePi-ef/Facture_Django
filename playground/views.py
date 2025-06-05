@@ -84,15 +84,16 @@ def get_facture_by_id(response, facture_id):
 
 
 # Used logig for filter in checkout : code en doublon, moche
-def factures(response):
+def factures(response, q=None):
   query = response.GET.get('q', '')
-  all_factures = Facture.objects.all()
   all_products = Product.objects.all()
   
-  # if query:
-  #   all_factures = Facture.objects.filter(
-  #     Q(id__icontains=query) | Q(date__icontains=query)
-  #   )
+  if query:
+    all_factures = Facture.objects.filter(
+      Q(id__icontains=query) | Q(date__icontains=query)
+    )
+  else:
+    all_factures = Facture.objects.all()
 
   all_factures_products = Facture_Product.objects.all()
 
@@ -152,7 +153,7 @@ def checkout(response, str_products_ids = None):
       
       facture.save()
       
-    return factures(response)
+    return redirect('factures')
 
 # def get_products_facture_by_id(response, id):
 #    products_id = Product.objects.filter(facture_id=id)
