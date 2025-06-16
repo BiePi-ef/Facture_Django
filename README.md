@@ -1,5 +1,7 @@
 # Facture Django
 
+this is a test project using Django as a backend. It is not finished
+
 ## Unfinished :
 
 - Add product
